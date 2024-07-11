@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'event',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +83,7 @@ WSGI_APPLICATION = 'django_config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'lib/data/db.sqlite3',
     }
 }
 
@@ -132,3 +137,7 @@ AUTH_USER_MODEL = 'user.User'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Telegram bot settings
+
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_TOKEN')
