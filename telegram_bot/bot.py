@@ -1,5 +1,12 @@
+import os
 import telebot
-from django_config import settings
+from telegram_bot.commands import *
+from dotenv import load_dotenv
 
 
-admin_bot = telebot.TeleBot(settings.TELEGRAM_BOT_TOKEN)
+load_dotenv()
+
+admin_bot = telebot.TeleBot(os.getenv('TELEGRAM_TOKEN'))
+admin_bot.register_message_handler(start, commands=['start'], pass_bot=True)
+
+admin_bot.polling()

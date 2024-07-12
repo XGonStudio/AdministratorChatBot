@@ -8,10 +8,10 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
     email = models.EmailField()
     age = models.IntegerField()
-    phonenumber = models.IntegerField(max_length=10)
+    phonenumber = models.IntegerField()
     photo = models.ImageField(upload_to='static/media/photos/users/')
     description = models.TextField()
-    location = models.CharField()
+    location = models.CharField(max_length=50)
     session_time = models.IntegerField()
     groups = models.ManyToManyField(
         'auth.Group', related_name='user_group', blank=True
@@ -40,7 +40,7 @@ class UserSocials(models.Model):
 
 # Clients DB model
 class Client(models.Model):
-    phonenumber = models.IntegerField(max_length=10, unique=True)
+    phonenumber = models.IntegerField(unique=True)
     password = models.CharField(max_length=50, blank=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
