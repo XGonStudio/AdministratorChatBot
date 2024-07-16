@@ -3,9 +3,12 @@ import os
 from pathlib import Path
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.views import View
 from rest_framework.views import APIView
 from rest_framework import status
 from dotenv import load_dotenv
+from .forms import *
 
 load_dotenv()
 
@@ -29,3 +32,16 @@ class MainInformationAPI(APIView):
 
 def index(request):
     return render(request, 'main/homepage.html')
+
+
+class LoginView(View):
+    template_name = 'main/login_page.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('event-list-by-id')
+
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass
+

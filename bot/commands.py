@@ -48,6 +48,7 @@ def worker_list(callback_query: types.CallbackQuery, bot: TeleBot):
                 btn_fb = types.InlineKeyboardButton(text='Facebook 🎫', url=f'{socials["facebook"]}')
                 keyboard.row(btn_detail)
                 keyboard.row(btn_inst, btn_fb)
+
                 bot.send_photo(callback_query.message.chat.id, photo=photo, caption=text, reply_markup=keyboard)
         else:
             bot.send_message(callback_query.message.chat.id, text='No workers')

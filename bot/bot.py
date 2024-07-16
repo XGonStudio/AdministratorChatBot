@@ -7,6 +7,9 @@ import commands
 load_dotenv()
 
 
+admin_bot = telebot.TeleBot(os.getenv('TELEGRAM_TOKEN'))
+
+
 def handle_errors(bot, error_message):
     def decorator(func):
         def wrapper(message, *args, **kwargs):
@@ -20,9 +23,6 @@ def handle_errors(bot, error_message):
                     bot.send_message(message.chat.id, error_message)
         return wrapper
     return decorator
-
-
-admin_bot = telebot.TeleBot(os.getenv('TELEGRAM_TOKEN'))
 
 
 @admin_bot.message_handler(commands=['start'])
