@@ -13,6 +13,7 @@
 nav{
     display: flex;
     justify-content: space-between;
+    height: 85px;
     align-items: center;
     position: relative;
     margin-bottom: 20px;
@@ -29,6 +30,7 @@ nav{
 }
 
 .nav-links{
+    width: 600px;
     text-align: right;
     background: #9a83ee;
     padding: 10px 20px;
@@ -50,7 +52,14 @@ nav{
 .nav-links ul li a{
     color: #fff;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
+}
+.nav-links ul li a:hover {
+    color: #4b3b6f !important;
+    font-weight: bold !important;
+    text-decoration: underline !important;
+    font-size: 20px !important;
+    transition: 0.1s !important;
 }
 
 .leftside-bar{
@@ -66,8 +75,7 @@ nav{
     display: flex;
     position: absolute;
     left: 20%;
-    width: 100%;
-    height: 80%;
+    width: 80%;
     z-index: 2;
     color: white;
 }
@@ -77,9 +85,13 @@ nav{
     width: 100%;
     height: 100px;
     margin-bottom: -20px;
-    bottom: 0;
-    left: 0;
-    background: #292936;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    background: #252525;
+}
+
+.foot h6{
+    color: #ffffff;
+    text-align: center;
+    justify-items: center;
+    justify-content: center;
+    font-size: 15px;
 }

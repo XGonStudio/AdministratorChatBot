@@ -5,5 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    Here will be list of all workers
+    <div class="worker-list"></div>
+        <h1>Our workers</h1>
+        <div class="worker-list-element">
+            <ol>
+                {% for user in users %}
+                    <li>
+                        <a href="{% url 'user-detail' user.id %}">
+                            <img class="user-miniature" src="{{ user.photo.url }}" alt="User Photo">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+
 {% endblock %}
