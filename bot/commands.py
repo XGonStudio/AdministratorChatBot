@@ -8,7 +8,6 @@ from telebot import TeleBot, types
 load_dotenv()
 
 
-# TODO: додати автоматизований збір даних про користувача (номер і ім'я) і відправка на url.post
 def start(message: types.Message, bot: TeleBot):
     url = f'{os.getenv("DJANGO_SERVER_URL")}/api'
 
@@ -29,7 +28,8 @@ def start(message: types.Message, bot: TeleBot):
 
 def worker_list(callback_query: types.CallbackQuery, bot: TeleBot):
     url = f'{os.getenv("DJANGO_SERVER_URL")}/user/api/list'
-    worker_url = f'{os.getenv("DJANGO_SERVER_URL")}/user/'
+    worker_url = f'{os.getenv("DJANGO_SERVER_URL")}/user'
+    rec_url = f'{os.getenv("DJANGO_SERVER_URL")}/event/create?'
 
     if requests.get(url).status_code == 200:
         data = requests.get(url).json()
@@ -43,12 +43,15 @@ def worker_list(callback_query: types.CallbackQuery, bot: TeleBot):
                 socials = worker['socials']
 
                 keyboard = types.InlineKeyboardMarkup()
-                btn_detail = types.InlineKeyboardButton('Details', url=f'{worker_url}{worker["id"]}')
-                btn_inst = types.InlineKeyboardButton(text='Instagram 📸', url=f'{socials["instagram"]}')
-                btn_fb = types.InlineKeyboardButton(text='Facebook 🎫', url=f'{socials["facebook"]}')
+                btn_detail = types.InlineKeyboardButton('Details', url=f'{worker_url}/{worker["id"]}')
                 keyboard.row(btn_detail)
+                btn_inst = types.InlineKeyboardButton(text='Instagram 📸', url=f'{socials["instagram"]}' if socials else 'instagram.com')
+                btn_fb = types.InlineKeyboardButton(text='Facebook 🎫', url=f'{socials["facebook"]} ' if socials else 'facebook.com')
+                btn_record = types.InlineKeyboardButton(text='Make a Reservation', url=f'{rec_url}')
                 keyboard.row(btn_inst, btn_fb)
+                keyboard.row(btn_record)
 
                 bot.send_photo(callback_query.message.chat.id, photo=photo, caption=text, reply_markup=keyboard)
         else:
             bot.send_message(callback_query.message.chat.id, text='No workers')
+

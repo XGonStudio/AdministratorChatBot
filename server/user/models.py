@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from django.contrib.auth.models import AbstractUser
 from django.contrib import admin
 from django.core.validators import RegexValidator
@@ -24,6 +23,10 @@ class User(AbstractUser):
     location = models.CharField(max_length=50)
     groups = models.ManyToManyField('auth.Group', related_name='user_group', blank=True)
     user_permissions = models.ManyToManyField('auth.Permission', related_name='user_permissions', blank=True)
+
+    def save(self, *args, **kwargs):
+        self.set_password(self.password)
+        super().save()
 
     class Meta:
         verbose_name = 'User'
