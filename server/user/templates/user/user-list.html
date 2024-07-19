@@ -12,7 +12,7 @@
                 {% for user in users %}
                     <li>
                         <a href="{% url 'user-detail' user.id %}">
-                            <img class="user-miniature" src="{{ user.photo }}" alt="User Photo">
+                            <img class="user-miniature" src="{{ user.photo }}" alt="">
                             {{ user.first_name }} {{ user.last_name }}
                         </a>
                     </li>
