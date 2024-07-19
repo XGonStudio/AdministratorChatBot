@@ -6,7 +6,13 @@ from user.models import User
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['description', 'client_phone', 'worker']
+        fields = ['date', 'description', 'client_phone', 'worker']
+        widgets = {
+            'date': forms.TextInput(attrs={'class': 'form-control datepicker'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'client_phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter client phone number'}),
+            'worker': forms.Select(attrs={'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

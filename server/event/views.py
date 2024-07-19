@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib import messages
 from .forms import EventForm
 from .serializers import EventSerializer
+
 
 class RecordEventView(View):
     def get(self, request):
@@ -11,8 +13,11 @@ class RecordEventView(View):
     def post(self, request):
         form = EventForm(request.POST)
         if form.is_valid():
-            serializer = EventSerializer(data=form.cleaned_data)
+            data = form.cleaned_data
+            data['worker'] = data['worker'].pk
+            serializer = EventSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                return render(request, 'main/homepage.html', {serializer: serializer})
-        return render(request, 'event/record.html', {'form': form, 'messages': form.errors})
+                messages.success(request, 'Your event has been recorded!')
+                return redirect('index')
+        return render(request, 'event/record.html', {'form': form, 'messages': 'Something went wrong'})
