@@ -29,7 +29,7 @@ def start(message: types.Message, bot: TeleBot):
 def worker_list(callback_query: types.CallbackQuery, bot: TeleBot):
     url = f'{os.getenv("DJANGO_SERVER_URL")}/user/api/list'
     worker_url = f'{os.getenv("DJANGO_SERVER_URL")}/user'
-    rec_url = f'{os.getenv("DJANGO_SERVER_URL")}/event/create?'
+    rec_url = f'{os.getenv("DJANGO_SERVER_URL")}/event/record'
 
     if requests.get(url).status_code == 200:
         data = requests.get(url).json()

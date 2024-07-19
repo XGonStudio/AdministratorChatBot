@@ -15,8 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_image_data(self, obj):
         if obj.photo:
-            with open(obj.photo.path, "rb") as image_file:
-                return base64.b64encode(image_file.read()).decode('utf-8')
+            return base64.b64encode(obj.photo.read()).decode('utf-8')
 
     class Meta:
         model = User

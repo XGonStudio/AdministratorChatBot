@@ -6,7 +6,26 @@
 
 {% block content %}
     <h1>Record new event</h1>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Event</button>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field, errors in messages.items %}
+                            <li>{{ field }}: {{ errors }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <button type="submit">Create Event</button>
+        </form>
+
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
 {% endblock %}

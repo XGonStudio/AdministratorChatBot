@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib import admin
 from django.core.validators import RegexValidator
 from django.db import models
+from django.contrib.auth.hashers import make_password
 
 
 GENDER_CHOICES = [
@@ -25,8 +26,9 @@ class User(AbstractUser):
     user_permissions = models.ManyToManyField('auth.Permission', related_name='user_permissions', blank=True)
 
     def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        super().save()
+        if self.pk is None or not self.check_password(self.password):
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'User'
@@ -38,9 +40,10 @@ class User(AbstractUser):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'is_admin', 'gender', 'phone_number')
+    list_display = ('id', 'username', 'first_name', 'last_name', 'is_admin', 'gender', 'phone_number')
     search_fields = ['id', 'is_admin', 'gender']
     ordering = ['id']
+    list_filter = ['is_admin', 'gender']
 
 
 # Submodel to 'User' (1-to-1 relations) for save links to worker socials like FB and Instagram or personal webpage
@@ -55,4 +58,5 @@ class UserSocials(models.Model):
 
 @admin.register(UserSocials)
 class UserSocialsAdmin(admin.ModelAdmin):
-    list_display = ['id']
+    list_display = ['id', 'links']
+    search_fields = ['links']
